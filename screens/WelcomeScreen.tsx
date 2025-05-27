@@ -21,7 +21,7 @@ const WelcomeScreen: React.FC<Props> = ({ onNext }) => {
       />
 
       <View style={styles.overlay}>
-        <Text style={styles.title}>Bem-vindo ao Driveasy</Text>
+        <Text style={styles.title}>Bem-vindo ao ModelCar</Text>
         <TouchableOpacity onPress={onNext} style={styles.button}>
           <Text style={styles.buttonText}>Próximo</Text>
         </TouchableOpacity>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#3182CE',
+    backgroundColor: '#e05e00',
     paddingVertical: 14,
     paddingHorizontal: 50,
     borderRadius: 30,
