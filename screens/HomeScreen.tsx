@@ -255,20 +255,19 @@ export default function HomeScreen() {
               onPress={() => openCarModal(previewData)}
               isFavorited={isFavorited}
               onToggleFavorite={toggleFavorite}
+              bgColor={colors.card}  
             />
           </>
         )}
 
         {carData && (
           <>
-            <Text mb={3} fontWeight="bold" fontSize="xl" color={colors.textPrimary}>
-              Resultado:
-            </Text>
             <CarCard
               carData={carData}
               onPress={() => openCarModal(carData)}
               isFavorited={isFavorited}
               onToggleFavorite={toggleFavorite}
+              bgColor={colors.card}  git
             />
           </>
         )}
@@ -345,9 +344,9 @@ export default function HomeScreen() {
                     }}
                     isFavorited={isFavorited}
                     onToggleFavorite={toggleFavorite}
+                    bgColor={colors.card}
                   />
                 )}
-                ItemSeparatorComponent={() => <Box height={3} />}
               />
             )}
           </Modal.Body>

@@ -16,14 +16,42 @@ interface CarCardProps {
   bgColor?: string;
 }
 
+// Função simples para detectar se a cor é clara (baseado no brilho do hex)
+// Recebe cor em formato #RRGGBB
+function isColorLight(color: string) {
+  if (!color.startsWith('#') || (color.length !== 7 && color.length !== 4)) {
+    return false; // fallback
+  }
+  let r, g, b;
+
+  if (color.length === 7) {
+    r = parseInt(color.slice(1, 3), 16);
+    g = parseInt(color.slice(3, 5), 16);
+    b = parseInt(color.slice(5, 7), 16);
+  } else {
+    // formato curto #rgb
+    r = parseInt(color[1] + color[1], 16);
+    g = parseInt(color[2] + color[2], 16);
+    b = parseInt(color[3] + color[3], 16);
+  }
+
+  // cálculo de luminância perceptiva
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+  return luminance > 150; // valor arbitrário para decidir claro/escuro
+}
+
 export default function CarCard({
   carData,
   onPress,
   isFavorited,
   onToggleFavorite,
-  bgColor = 'white',
+  bgColor = '#2a2a2a', // default para modo escuro
 }: CarCardProps) {
   const favorited = isFavorited(carData);
+
+  const lightBg = isColorLight(bgColor);
+  const textColor = lightBg ? 'black' : 'white';
+  const iconColor = favorited ? 'red' : textColor;
 
   return (
     <Pressable onPress={onPress}>
@@ -33,6 +61,7 @@ export default function CarCard({
         shadow={3}
         p={4}
         w="90%"
+        alignSelf="center"
       >
         <Image
           source={{ uri: carData.imageUrl }}
@@ -43,7 +72,7 @@ export default function CarCard({
           mb={3}
         />
         <HStack justifyContent="space-between" alignItems="center">
-          <Text fontWeight="bold" fontSize="lg" color={bgColor === 'white' ? 'black' : 'white'}>
+          <Text fontWeight="bold" fontSize="lg" color={textColor}>
             {carData.name}
           </Text>
           <IconButton
@@ -51,7 +80,7 @@ export default function CarCard({
               <Ionicons
                 name={favorited ? 'heart' : 'heart-outline'}
                 size={24}
-                color={favorited ? 'red' : bgColor === 'white' ? 'black' : 'white'}
+                color={iconColor}
               />
             }
             onPress={() => onToggleFavorite(carData)}
